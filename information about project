@@ -1,0 +1,137 @@
+Machine Learning Major Project
+
+Online Payments Fraud Detection with Machine Learning
+
+Introduction
+
+In this project, we aim to train a machine learning model that classifies online transactions as fraudulent or non-fraudulent.
+
+A dataset from Kaggle is used, which contains historical records of online payments, balances, and fraud labels. By analyzing this dataset, we can understand which transactions are likely to be fraud.
+
+Dataset Description
+
+The dataset has the following columns:
+
+1. step Unit of time (1 step = 1 hour).
+
+2. type Type of online transaction (PAYMENT, CASH_OUT, TRANSFER, etc.).
+
+3. amount Transaction amount.
+
+4. nameOrig Customer initiating the transaction.
+
+5. oldbalanceOrg Balance before the transaction.
+
+6. newbalanceOrig Balance after the transaction.
+
+7. name Dest Recipient of the transaction.
+
+8. oldbalanceDest transaction. Recipient's balance before
+
+9. newbalanceDest transaction. Recipient's balance after
+
+10. isFraud Target column (1 = Fraud, 0 = Not Fraud).Methodology (Step by Step)
+
+
+Step 1: Import Libraries
+
+Python
+
+
+
+import pandas as pd
+
+import numpy as np
+
+import matplotlib.pyplot as plt
+
+import seaborn as sns
+
+from sklearn.model_selection import train_test_split from sklearn.ensemble import Random ForestClassifier from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
+
+
+Step 2: Load Dataset
+
+
+
+data pd.read_csv("fraud.csv")
+
+print(data.head())
+
+print(data.info())
+
+
+Step 3: Data Preprocessing
+
+Removed nameOrig and nameDest (not useful for prediction).
+
+Converted type (categorical) into numeric values using one-hot encoding.
+
+Checked for missing values.
+
+
+
+data data.drop(['nameOrig', 'nameDest'], axis=1) data pd.get_dummies(data, columns=['type'],
+
+drop_first=True)
+
+
+Step 4: Feature Selection
+
+
+X data.drop('isFraud', axis=1)
+
+y data['isFraud']Step 5: Train-Test Split
+
+
+X_train, X_test, y_train, y_test =
+
+train_test_split(X, y, test_size=0.3,
+
+random_state=42)
+
+
+Step 6: Model Training
+
+
+
+model Random ForestClassifier(n_estimators=100,
+
+random_state=42)
+
+model.fit(X_train, y_train)
+
+
+Step 7: Prediction
+
+
+
+y_pred model.predict(X_test)
+
+
+Step 8: Evaluation
+
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+print(classification_report(y_test, y_pred))
+
+cm confusion_matrix(y_test, y_pred)
+
+sns.heatmap(cm, annot True, fmt='d', cmap='Blues')
+
+plt.xlabel("Predicted")
+
+plt.ylabel("Actual")
+
+plt.show()
+
+Results
+
+The Random Forest Classifier achieved an accuracy of ~99% on the test dataset.
+
+Confusion matrix shows effective classification between fraud and non-fraud cases. Conclusion
+
+This project demonstrates how Machine Learning can detect fraudulent online payments. By using transaction details and balances, the model successfully classifies fraud with high accuracy.
+
+This fraud detection system can help banks, payment gateways, and financial institutions minimize risks by flagging suspicious transactions for further investigation.
