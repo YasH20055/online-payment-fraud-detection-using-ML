@@ -1,1 +1,89 @@
+Methodology (Step by Step)
 
+Step 1: Import Libraries
+
+
+
+import pandas as pd
+
+import numpy as np
+
+import matplotlib.pyplot as plt
+
+import seaborn as sns
+
+from sklearn.model_selection import train_test_split
+
+from sklearn.ensemble import Random ForestClassifier
+
+from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
+
+
+
+Step 2: Load Dataset
+
+
+
+
+
+data = pd.read_csv("fraud.csv")
+
+print(data.head())
+
+print(data.info())
+Step 3: Data Preprocessing
+
+Removed nameOrig and nameDest (not useful for prediction).
+
+Converted type (categorical) into numeric values using one-hot encoding.
+
+Checked for missing values.
+
+
+
+data.drop(['nameOrig', 'name Dest'], axis=1) pd.get_dummies( get_dummies (data, columns=['type'], data data drop_first=True)
+
+Step 4: Feature Selection
+
+
+X= data.drop('isFraud', axis=1)
+
+y = data['isFraud']
+
+Step 5: Train-Test Split
+
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
+
+Step 6: Model Training
+
+
+model Random ForestClassifier(n_estimators=100, random_state=42)
+
+model.fit(X_train, y_train)
+
+
+Step 7: Prediction
+
+
+
+y_pred model.predict(X_test)
+
+
+Step 8: Evaluation
+
+
+
+print("Accuracy:", accuracy_score(y_test, y_pred))
+
+print(classification_report(y_test, y_pred))
+
+cm = confusion_matrix(y_test, y_pred)
+
+sns.heatmap(cm, annot=True, fmt='d', cmap='Blues')
+
+plt.xlabel("Predicted")
+
+plt.ylabel("Actual")
+
+plt.show()
